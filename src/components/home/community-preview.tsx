@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Users, ArrowRight, Info, Code2, BookOpen, TrendingUp, User, MessageSquare } from "lucide-react";
+import {
+  Users,
+  ArrowRight,
+  Info,
+  Code2,
+  BookOpen,
+  TrendingUp,
+  User,
+  MessageSquare,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +54,7 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
     totalMembers: 0,
     totalPosts: 0,
     activeProjects: 0,
-    ongoingStudies: 0
+    ongoingStudies: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -54,8 +63,8 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
       try {
         // 커뮤니티 게시글과 통계 데이터를 병렬로 가져오기
         const [postsResponse, usersResponse] = await Promise.all([
-          fetch('/api/posts?limit=3&sortBy=popular'),
-          fetch('/api/users?countOnly=true')
+          fetch("/api/posts?limit=3&sortBy=popular"),
+          fetch("/api/users?countOnly=true"),
         ]);
 
         if (postsResponse.ok) {
@@ -69,45 +78,52 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
         let totalMembers = 0;
         if (usersResponse.ok) {
           const usersData = await usersResponse.json();
-          totalMembers = usersData.success ? (usersData.data?.count || usersData.count || 0) : 0;
+          totalMembers = usersData.success
+            ? usersData.data?.count || usersData.count || 0
+            : 0;
         }
 
         // 게시글 통계 계산
-        const totalPostsResponse = await fetch('/api/posts?countOnly=true');
+        const totalPostsResponse = await fetch("/api/posts?countOnly=true");
         let totalPosts = 0;
         let activeProjects = 0;
         let ongoingStudies = 0;
 
         if (totalPostsResponse.ok) {
           const totalPostsData = await totalPostsResponse.json();
-          totalPosts = totalPostsData.success ? (totalPostsData.data?.count || totalPostsData.count || 0) : 0;
+          totalPosts = totalPostsData.success
+            ? totalPostsData.data?.count || totalPostsData.count || 0
+            : 0;
         }
 
         // 타입별 통계 계산
         const [projectsResponse, studiesResponse] = await Promise.all([
-          fetch('/api/posts?type=project&status=recruiting&countOnly=true'),
-          fetch('/api/posts?type=study&status=recruiting&countOnly=true')
+          fetch("/api/posts?type=project&status=recruiting&countOnly=true"),
+          fetch("/api/posts?type=study&status=recruiting&countOnly=true"),
         ]);
 
         if (projectsResponse.ok) {
           const projectsData = await projectsResponse.json();
-          activeProjects = projectsData.success ? (projectsData.data?.count || projectsData.count || 0) : 0;
+          activeProjects = projectsData.success
+            ? projectsData.data?.count || projectsData.count || 0
+            : 0;
         }
 
         if (studiesResponse.ok) {
           const studiesData = await studiesResponse.json();
-          ongoingStudies = studiesData.success ? (studiesData.data?.count || studiesData.count || 0) : 0;
+          ongoingStudies = studiesData.success
+            ? studiesData.data?.count || studiesData.count || 0
+            : 0;
         }
 
         setStats({
           totalMembers,
           totalPosts,
           activeProjects,
-          ongoingStudies
+          ongoingStudies,
         });
-
       } catch (error) {
-        console.error('Failed to load community data:', error);
+        console.error("Failed to load community data:", error);
       } finally {
         setLoading(false);
       }
@@ -118,34 +134,47 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case "project": return <Code2 className="w-4 h-4" />;
-      case "study": return <BookOpen className="w-4 h-4" />;
-      case "mentoring": return <Info className="w-4 h-4" />;
-      default: return <Users className="w-4 h-4" />;
+      case "project":
+        return <Code2 className="w-4 h-4" />;
+      case "study":
+        return <BookOpen className="w-4 h-4" />;
+      case "mentoring":
+        return <Info className="w-4 h-4" />;
+      default:
+        return <Users className="w-4 h-4" />;
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case "project": return "bg-blue-100 text-blue-700 border-blue-200";
-      case "study": return "bg-green-100 text-green-700 border-green-200";
-      case "mentoring": return "bg-purple-100 text-purple-700 border-purple-200";
-      default: return "bg-gray-100 text-gray-700 border-gray-200";
+      case "project":
+        return "bg-blue-100 text-blue-700 border-blue-200";
+      case "study":
+        return "bg-green-100 text-green-700 border-green-200";
+      case "mentoring":
+        return "bg-purple-100 text-purple-700 border-purple-200";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-200";
     }
   };
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case "project": return "프로젝트";
-      case "study": return "스터디";
-      case "mentoring": return "정보공유";
-      default: return type;
+      case "project":
+        return "프로젝트";
+      case "study":
+        return "스터디";
+      case "mentoring":
+        return "정보공유";
+      default:
+        return type;
     }
   };
 
   return (
-    <div className={`bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-8 hover:shadow-xl transition-all duration-300 ${className}`}>
-      
+    <div
+      className={`bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg p-8 hover:shadow-xl transition-all duration-300 ${className}`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
@@ -153,11 +182,15 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
             <Users className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-800">활발한 커뮤니티 🔥</h3>
-            <p className="text-sm text-gray-600 mt-1">함께 성장하는 개발자들의 공간</p>
+            <h3 className="text-2xl font-bold text-gray-800">
+              활발한 커뮤니티
+            </h3>
+            <p className="text-sm text-gray-600 mt-1">
+              함께 성장하는 개발자들의 공간
+            </p>
           </div>
         </div>
-        <Link 
+        <Link
           href="/community"
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
         >
@@ -256,10 +289,12 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
                       className="rounded-full ring-2 ring-white shadow-md"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
+                        target.style.display = "none";
                         const parent = target.parentElement;
                         if (parent) {
-                          parent.innerHTML = `<div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md ring-2 ring-white">${post.author.name.charAt(0)}</div>`;
+                          parent.innerHTML = `<div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md ring-2 ring-white">${post.author.name.charAt(
+                            0
+                          )}</div>`;
                         }
                       }}
                     />
@@ -283,11 +318,11 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
                       </Badge>
                     )}
                     <span className="text-xs text-gray-500">
-                      {new Date(post.createdAt).toLocaleDateString('ko-KR', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
+                      {new Date(post.createdAt).toLocaleDateString("ko-KR", {
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })}
                     </span>
                   </div>
@@ -297,8 +332,8 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
                     {post.title}
                   </h4>
                   <p className="text-sm text-gray-600 mb-3 line-clamp-1">
-                    {post.description.replace(/[#*`]/g, '').slice(0, 100)}
-                    {post.description.length > 100 && '...'}
+                    {post.description.replace(/[#*`]/g, "").slice(0, 100)}
+                    {post.description.length > 100 && "..."}
                   </p>
 
                   {/* Tech Tags */}
@@ -334,8 +369,8 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
                         {post.viewsCount}
                       </span>
                     </div>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="ghost"
                       className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 hover:text-purple-700 hover:bg-purple-50 text-xs px-3 py-1"
                     >
@@ -364,9 +399,7 @@ export function CommunityPreview({ className = "" }: CommunityPreviewProps) {
             </Button>
           </Link>
           <Link href="/profile">
-            <Button variant="outline">
-              프로필 만들기
-            </Button>
+            <Button variant="outline">프로필 만들기</Button>
           </Link>
         </div>
       </div>

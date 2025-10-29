@@ -433,7 +433,7 @@ export default async function TechDetailPage({ params }: Props) {
         <Card className="bg-white/60 backdrop-blur-sm border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              🤖 AI가 쉽게 설명합니다!
+              AI가 쉽게 설명합니다!
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -453,63 +453,6 @@ export default async function TechDetailPage({ params }: Props) {
                 </p>
                 <p className="text-sm text-gray-500">
                   곧 AI가 이 기술에 대한 쉬운 설명을 제공할 예정입니다.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* 사용 기업 섹션 */}
-        <Card className="bg-white/60 backdrop-blur-sm border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              🏢 실제 사용 기업 현황
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {usingCompanies.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {usingCompanies.slice(0, 6).map((company: any) => (
-                  <div
-                    key={company.name}
-                    className="flex items-center gap-3 p-4 bg-white/40 rounded-lg border border-white/30"
-                  >
-                    <div className="w-10 h-10 flex items-center justify-center">
-                      {company.logoUrl ? (
-                        <Image
-                          src={company.logoUrl}
-                          alt={company.name}
-                          width={32}
-                          height={32}
-                          className="object-contain"
-                        />
-                      ) : (
-                        <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center text-xs font-bold text-gray-600">
-                          {company.name.charAt(0)}
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-800">
-                        {company.name}
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        {company.category}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-600 text-center py-8">
-                아직 등록된 사용 기업이 없습니다.
-              </p>
-            )}
-
-            {usingCompanies.length > 6 && (
-              <div className="text-center mt-6">
-                <p className="text-sm text-gray-600">
-                  총 {usingCompanies.length}개 기업에서 사용 중 (상위 6개 표시)
                 </p>
               </div>
             )}

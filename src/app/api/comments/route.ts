@@ -6,8 +6,11 @@ import {
   errorResponse,
   createPagination,
 } from "@/lib/api-response";
-import { createCommentNotification, createCommentReplyNotification } from "@/lib/notification";
-import type { Prisma } from '@prisma/client';
+import {
+  createCommentNotification,
+  createCommentReplyNotification,
+} from "@/lib/notification";
+import type { Prisma } from "@prisma/client";
 
 // GET /api/comments - 댓글 목록 조회 (특정 게시글)
 export async function GET(request: NextRequest) {
@@ -161,10 +164,10 @@ export async function POST(request: NextRequest) {
     // 게시글 존재 확인
     const post = await prisma.post.findUnique({
       where: { id: parseInt(postId) },
-      select: { 
-        id: true, 
-        title: true, 
-        authorId: true 
+      select: {
+        id: true,
+        title: true,
+        authorId: true,
       },
     });
 
@@ -173,14 +176,18 @@ export async function POST(request: NextRequest) {
     }
 
     // 대댓글인 경우 부모 댓글 존재 확인
-    let parentComment = null;
+    let parentComment: {
+      id: number;
+      postId: number;
+      authorId: string;
+    } | null = null;
     if (parentId) {
       parentComment = await prisma.comment.findUnique({
         where: { id: parseInt(parentId) },
-        select: { 
-          id: true, 
-          postId: true, 
-          authorId: true 
+        select: {
+          id: true,
+          postId: true,
+          authorId: true,
         },
       });
 

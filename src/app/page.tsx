@@ -28,25 +28,6 @@ export default function Home() {
           <TabsTrending />
         </InViewFade>
 
-        {/* Section 3: 스택별 사용 기업을 한눈에 */}
-        <InViewFade>
-          <section className="py-24">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                스택별 사용 기업을 한눈에!
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                인기 기술들을 어떤 기업들이 사용하고 있는지 확인해보세요
-              </p>
-            </div>
-
-            <div className="mb-12">
-              {/* 스택별 기업 미리보기 */}
-              <TechCompaniesPreview />
-            </div>
-          </section>
-        </InViewFade>
-
         {/* Section 4: 커뮤니티 */}
         <InViewFade>
           <section className="py-24">

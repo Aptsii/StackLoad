@@ -352,7 +352,7 @@ export default function CommunityPage() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                개발자 커뮤니티 🚀
+                개발자 커뮤니티
               </h1>
               <p className="text-gray-600">
                 함께 성장할 동료들과 프로젝트, 스터디, 멘토링을 시작해보세요
