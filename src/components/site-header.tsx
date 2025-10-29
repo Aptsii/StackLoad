@@ -1,88 +1,176 @@
+"use client";
+
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
+import {
+  Layers3,
+  User,
+  Bell,
+  MessageSquare,
+  Settings,
+  LogOut,
+  Search,
+  Home,
+  Users,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { NotificationDropdown } from "@/components/notifications/notification-dropdown";
 
-export default function Header() {
+export function SiteHeader() {
+  const { data: session } = useSession();
+
   return (
-    <header className="text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-          <div className="flex flex-col">
-            <span className="ml-3 text-xl">StackLoad</span>
-            <span className="text-xs text-right">개발자 커뮤니티</span>
-          </div>
-        </a>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <Link href={"/"} className="flex mr-5 hover:text-gray-900">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-              />
-            </svg>
-            <span className="ml-2">홈</span>
+    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-lg border-b border-gray-200/50 shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="p-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-200">
+              <Layers3 className="size-5 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                stackload
+              </span>
+              <span className="text-xs text-gray-500 -mt-1">
+                개발자 커뮤니티
+              </span>
+            </div>
           </Link>
-          <Link href={"/"} className="flex mr-5 hover:text-gray-900">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-            <span className="ml-2">기술 검색</span>
-          </Link>
-          <Link href={"/"} className="flex mr-5 hover:text-gray-900">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-              />
-            </svg>
 
-            <span className="ml-2">커뮤니티</span>
-          </Link>
-        </nav>
-        <div className="inline-flex items-center py-1 px-3 text-base mt-4 md:mt-0">
-          <Link
-            href={"/"}
-            className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-          >
-            로그인
-          </Link>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1">
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-all duration-200"
+            >
+              <Home className="size-4" />홈
+            </Link>
+            <Link
+              href="/search"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-all duration-200"
+            >
+              <Search className="size-4" />
+              기술 탐색
+            </Link>
+            <Link
+              href="/community"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-all duration-200"
+            >
+              <Users className="size-4" />
+              커뮤니티
+            </Link>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            {/* Notifications */}
+            <NotificationDropdown />
+
+            {/* User Menu */}
+            {session ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 px-2"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      {session.user.name?.[0]?.toUpperCase() || "U"}
+                    </div>
+                    <div className="hidden sm:flex flex-col items-start">
+                      <span className="text-sm font-medium">
+                        {session.user.name || "사용자"}
+                      </span>
+                      <span className="text-xs text-gray-500">개발자</span>
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <div className="p-3 border-b">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                        {session.user.name?.[0]?.toUpperCase() || "U"}
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {session.user.name || "사용자"}님
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <span>개발자</span>
+                          <Badge className="bg-blue-100 text-blue-700 text-xs">
+                            Mid-Level
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mobile Navigation */}
+                  <div className="lg:hidden border-b">
+                    <DropdownMenuLabel>메뉴</DropdownMenuLabel>
+                    <DropdownMenuItem asChild>
+                      <Link href="/" className="flex items-center gap-2">
+                        <Home className="size-4" />홈
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/search" className="flex items-center gap-2">
+                        <Search className="size-4" />
+                        기술 탐색
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/community"
+                        className="flex items-center gap-2"
+                      >
+                        <Users className="size-4" />
+                        커뮤니티
+                      </Link>
+                    </DropdownMenuItem>
+                  </div>
+
+                  <DropdownMenuLabel>내 계정</DropdownMenuLabel>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="flex items-center gap-2">
+                      <User className="size-4" />내 프로필
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/settings" className="flex items-center gap-2">
+                      <Settings className="size-4" />
+                      설정
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="flex items-center gap-2 text-red-600 cursor-pointer"
+                    onClick={() => signOut()}
+                  >
+                    <LogOut className="size-4" />
+                    로그아웃
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                onClick={() => signIn()}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+              >
+                로그인
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </header>

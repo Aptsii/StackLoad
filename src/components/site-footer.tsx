@@ -1,7 +1,11 @@
-export default function Footer() {
+import Link from "next/link";
+
+export function SiteFooter() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-muted-foreground text-center">
-      <p>© 2025 stackload. All rights reserved.</p>
-    </div>
+    <footer className="border-t">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-muted-foreground text-center">
+        <p>© {new Date().getFullYear()} stackload. All rights reserved.</p>
+      </div>
+    </footer>
   );
 }
