@@ -82,8 +82,21 @@ export function SiteHeader() {
                     variant="ghost"
                     className="flex items-center gap-2 px-2"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                      {session.user.name?.[0]?.toUpperCase() || "U"}
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                      {session.user.image ? (
+                        <Image
+                          src={session.user.image}
+                          alt={session.user.name || ""}
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-cover rounded-full"
+                          referrerPolicy="no-referrer" // ← 구글 이미지 차단 방지
+                        />
+                      ) : (
+                        <span className="text-white text-2xl font-bold">
+                          {session.user.name?.[0]?.toUpperCase() || "U"}
+                        </span>
+                      )}
                     </div>
                     <div className="hidden sm:flex flex-col items-start">
                       <span className="text-sm font-medium">
@@ -97,7 +110,20 @@ export function SiteHeader() {
                   <div className="p-3 border-b">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                        {session.user.name?.[0]?.toUpperCase() || "U"}
+                        {session.user.image ? (
+                          <Image
+                            src={session.user.image}
+                            alt={session.user.name || ""}
+                            width={96}
+                            height={96}
+                            className="w-full h-full object-cover rounded-full"
+                            referrerPolicy="no-referrer" // ← 구글 이미지 차단 방지
+                          />
+                        ) : (
+                          <span className="text-white text-2xl font-bold">
+                            {session.user.name?.[0]?.toUpperCase() || "U"}
+                          </span>
+                        )}
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">
