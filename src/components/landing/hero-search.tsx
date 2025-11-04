@@ -86,33 +86,34 @@ export function HeroSearch() {
     (async () => {
       try {
         const r = await fetch("/api/techs");
-        const extra: Item[] = r.ok ? await r.json() : [];
+        const jsonResponse = r.ok ? await r.json() : { data: [] };
+        const extra: Item[] = jsonResponse.data || [];
         setItems(extra);
-      } catch {}
+      } catch (error) {
+        console.error("Error fetching techs:", error);
+      }
     })();
   }, []);
 
-  const fuse = useMemo(
-    () => {
-      if (!Array.isArray(items) || items.length === 0) return null;
-      return new Fuse(items, { keys: ["name", "slug", "category"], threshold: 0.3 });
-    },
-    [items]
-  );
-  const results = useMemo(
-    () => {
-      if (!Array.isArray(items)) return [];
-      
-      return query && fuse
-        ? fuse
-            .search(query)
-            .map((r) => r.item)
-            .slice(0, 8)
-        : items.slice(0, 8);
-    },
-    [query, fuse, items]
-  );
+  const fuse = useMemo(() => {
+    if (!Array.isArray(items) || items.length === 0) return null;
+    return new Fuse(items, {
+      keys: ["name", "slug", "category"],
+      threshold: 0.4,
+    });
+  }, [items]);
+  const results = useMemo(() => {
+    if (!Array.isArray(items)) return [];
 
+    return query && fuse
+      ? fuse
+          .search(query)
+          .map((r) => r.item)
+          .slice(0, 8)
+      : items.slice(0, 8);
+  }, [query, fuse, items]);
+
+  console.log(items, results);
   return (
     <div className="relative w-full max-w-6xl mx-auto" data-search-container>
       {/* 검색창 */}
@@ -153,7 +154,7 @@ export function HeroSearch() {
       {/* 검색 결과 드롭다운 */}
       {open && (
         <div className="absolute z-20 mt-3 w-full animate-in slide-in-from-top-2 duration-200">
-          <div className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl overflow-hidden pb-4">
             {/* 헤더 */}
             <div className="p-4 border-b border-gray-100">
               <div className="flex items-center gap-2 text-sm text-gray-600">

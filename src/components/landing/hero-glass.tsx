@@ -6,7 +6,7 @@ import { HeroSearch } from "@/components/landing/hero-search";
 
 export function HeroGlass() {
   return (
-    <section id="hero" className="relative overflow-hidden py-32">
+    <section id="hero" className="relative py-32">
       {/* 배경 그라데이션 - 페이지 전체와 일치 */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 opacity-50 bg-[radial-gradient(1200px_600px_at_50%_-10%,oklch(0.95_0.06_260)_0%,transparent_60%)]" />
