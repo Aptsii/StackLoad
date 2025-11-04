@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { NotificationDropdown } from "@/components/notifications/notification-dropdown";
+import Image from "next/image";
 
 export function SiteHeader() {
   const { data: session } = useSession();
@@ -34,17 +35,14 @@ export function SiteHeader() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="p-2 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-200">
-              <Layers3 className="size-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                stackload
-              </span>
-              <span className="text-xs text-gray-500 -mt-1">
-                개발자 커뮤니티
-              </span>
-            </div>
+            <Image
+              src="/stackloadLogo.svg"
+              alt="stackload 개발자 커뮤니티"
+              width={180}
+              height={42}
+              priority
+              className="h-25 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -165,7 +163,7 @@ export function SiteHeader() {
             ) : (
               <Button
                 onClick={() => signIn()}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                className="hover:text-gray-900 hover:bg-gray-100/80 transition-all duration-200 bg-white text-black"
               >
                 로그인
               </Button>
