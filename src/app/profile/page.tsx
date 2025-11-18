@@ -131,16 +131,23 @@ const getStatusColor = (status: string) => {
   }
 };
 
+const formatJoinedDate = (dateValue?: string) => {
+  if (!dateValue) return "-";
+
+  const parsedDate = new Date(dateValue);
+  return isNaN(parsedDate.getTime())
+    ? "-"
+    : parsedDate.toLocaleDateString("ko-KR");
+};
+
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const joinedDate = userProfile?.createdAt
-    ? new Date(userProfile.createdAt).toLocaleDateString("ko-KR")
-    : "-";
+  const joinedDate = formatJoinedDate(userProfile?.createdAt);
   const profileImage =
     userProfile?.image ||
     userProfile?.avatarUrl ||
@@ -163,7 +170,7 @@ export default function ProfilePage() {
         const result = await response.json();
         if (result.success) {
           // Fetch updated profile data to include tech stack
-          const profileResponse = await fetch(`/api/users/${user?.id}`);
+          const profileResponse = await fetch("/api/users/me");
           if (profileResponse.ok) {
             const profileResult = await profileResponse.json();
             if (profileResult.success) {
@@ -186,11 +193,11 @@ export default function ProfilePage() {
   // 사용자 프로필 정보 가져오기
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (!user?.id) return;
+      if (!isAuthenticated) return;
 
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/users/${user.id}`);
+        const response = await fetch("/api/users/me");
         if (response.ok) {
           const result = await response.json();
           if (result.success) {
@@ -205,7 +212,7 @@ export default function ProfilePage() {
     };
 
     fetchUserProfile();
-  }, [user]);
+  }, [isAuthenticated]);
 
   // 사용자가 작성한 글 가져오기
   useEffect(() => {
