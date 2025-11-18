@@ -42,6 +42,7 @@ interface UserProfile {
   name: string;
   email: string;
   image?: string;
+  avatarUrl?: string;
   bio?: string;
   level?: string;
   location?: string;
@@ -137,6 +138,15 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const joinedDate = userProfile?.createdAt
+    ? new Date(userProfile.createdAt).toLocaleDateString("ko-KR")
+    : "-";
+  const profileImage =
+    userProfile?.image ||
+    userProfile?.avatarUrl ||
+    user?.image ||
+    user?.avatarUrl ||
+    "";
 
   // 프로필 저장 함수
   const handleSaveProfile = async (profileData: any) => {
@@ -241,10 +251,10 @@ export default function ProfilePage() {
             <div className="flex flex-col lg:flex-row lg:items-center gap-6">
               {/* 프로필 이미지 */}
               <div className="flex-shrink-0">
-                {userProfile?.image ? (
+                {profileImage ? (
                   <Image
-                    src={userProfile.image}
-                    alt={userProfile.name || "프로필"}
+                    src={profileImage}
+                    alt={userProfile?.name || user?.name || "프로필"}
                     width={120}
                     height={120}
                     className="rounded-full object-cover"
@@ -292,10 +302,7 @@ export default function ProfilePage() {
                   )}
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
-                    가입일:{" "}
-                    {new Date(
-                      userProfile?.createdAt || Date.now()
-                    ).toLocaleDateString("ko-KR")}
+                    가입일: {joinedDate}
                   </div>
                 </div>
 
